@@ -1,22 +1,14 @@
-% Author: Suryansh Kumar
-% ETH Zurich
+% % Author: Suryansh Kumar
+% % ETH Zurich
 
-% add the dataset and important function file path.
-dataset_folder = '../dataset/';
-utility_folder = '../util/';
-dataset_file = 'point_trajectory.mat';
 
-addpath(dataset_folder);
-addpath(utility_folder);
+function [R, S] = giveme_motion_and_shape(W)
 
-% Step 1: get the measurment matrix
-W = giveme_measurement_matrix(dataset_folder, dataset_file);
-
-% Step 2: substract the translation component.
+% Step 1: substract the translation component.
 Wm = mean(W, 2);
 W_tilde = W - Wm*ones(1, size(W, 2));
 
-% Step 3: perform the rank 3 factorization of the measurement matrix.
+% Step 2: perform the rank 3 factorization of the measurement matrix.
 [O1, S, O2] = svd(W_tilde);
 
     % First three columns of O1. (%This part is intensionally indented)
@@ -27,17 +19,17 @@ W_tilde = W - Wm*ones(1, size(W, 2));
     O2 = O2';
     O2_prime = O2(1:3, :);
     
-% Step 4: create the R_hat and S_hat matrix.
+% Step 3: create the R_hat and S_hat matrix.
 R_hat = O1_prime*sqrtm(S1_prime);
 S_hat = sqrtm(S1_prime)*O2_prime;
 
-% Here, comes the complex part of the algorithm.
+% Notes: Here, comes the complex part of the algorithm.
 % The above decomposition is not unique, but the 
 % point to note is that, its a linear transformed 
-% bases of the same space. Hence, we must solve for such a transformation.
+% bases of the same space. Hence, we must solve 
+% for such a transformation.
 
-% Step 5: metric constraint. (Compute Q)
-
+% Step 4: metric constraint. (Compute Q)
 % Note that Q*Q^T is symmetric. Thus we have to solve for only six 
 % variables under the orthonormal constraint.
 
@@ -73,10 +65,7 @@ Q = chol(LT);
 R = R_hat*Q;
 S = Q \ S_hat;
 
-
-% Misc: plot the 3D points.
-figure,
-plot3(S(1, :), S(2, :), S(3, :), 'r.');
+end
 
 
 
