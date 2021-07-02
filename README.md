@@ -11,7 +11,7 @@ rigid structure from motion under orthographic camera model assumption.
 <tr>
 <td>
 [1] <strong>Shape and Motion from Image Streams under Orthography: a Factorization Method.</strong><br />
-CARLO TOMASI, TAKEO KANADE <br /> (International Journal of Computer Vision, IJCV, 1992.) <br />
+Carlo Tomasi, Takeo Kanade <br /> International Journal of Computer Vision, IJCV, 1992, pages 137-154, Springer.<br />
 [<a href="https://www-users.cs.umn.edu/~hspark/CSci5980/tomasi.pdf" target="_blank">pdf</a>] <br />
 </td>
 </tr>
