@@ -1,6 +1,4 @@
-# shape_and_motion_factorization
-
-Statement: The above code implements the classical factorization method to
+Statement: The above code implements the Tomasi et.al [1] classical factorization method to
 rigid structure from motion under orthographic camera model assumption.
 
 # code structure
