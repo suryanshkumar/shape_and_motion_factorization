@@ -30,8 +30,9 @@ S_hat = sqrtm(S1_prime)*O2_prime;
 % for such a transformation.
 
 % Step 4: metric constraint. (Compute Q)
-% Note that Q*Q^T is symmetric. Thus we have to solve for only six 
-% variables under the orthonormal constraint.
+% Note that Q*Q^T is symmetric. Accordingly,
+% we first solve for the six variables under the orthonormality 
+% constraint and later use cholesky factorization to recover Q.
 
 % solve for each frame.
 L = [];
@@ -64,6 +65,9 @@ Q = chol(LT);
 % Step 6: recover rotation and structure
 R = R_hat*Q;
 S = Q \ S_hat;
+
+% Note that one can use other optimization methods to solve
+% for Q and may end up getting a better solution.
 
 end
 
