@@ -4,7 +4,7 @@
 
 function [R, S] = giveme_motion_and_shape(W)
 
-% Step 1: substract the translation component.
+% Step 1: mean centralize the meaurement matrix.
 Wm = mean(W, 2);
 W_tilde = W - Wm*ones(1, size(W, 2));
 
@@ -40,15 +40,15 @@ Ro = [];
 
 for i = 1:size(R_hat, 1)/2
     G_k1 = R_hat(2*i-1, :);
-    a = G_k1(1); b = G_k1(2); c = G_k1(3);
+    r11 = G_k1(1); r12 = G_k1(2); r13 = G_k1(3);
    
     G_k2 = R_hat(2*i, :);
-    d = G_k2(1); e = G_k2(2); f = G_k2(3);
+    r21 = G_k2(1); r22 = G_k2(2); r23 = G_k2(3);
    
     L = [L;
-         a*a a*b+b*a a*c+c*a b*b c*b+b*c c*c;
-         d*d d*e+e*d d*f+f*d e*e f*e+e*f f*f;
-         a*d a*e+b*d a*f+c*d b*e b*f+e*c c*f];
+         r11*r11 r11*r12+r12*r11 r11*r13+r13*r11 r12*r12 r13*r12+r12*r13 r13*r13;
+         r21*r21 r21*r22+r22*r21 r21*r23+r23*r21 r22*r22 r23*r22+r22*r23 r23*r23;
+         r11*r21 r11*r22+r12*r21 r11*r23+r13*r21 r12*r22 r12*r23+r22*r13 r13*r23];
        
     Ro = [Ro; 1; 1; 0];
 end
